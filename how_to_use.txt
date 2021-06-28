@@ -1,0 +1,51 @@
+***Exceute the script: 
+The program uses Python 3.8.5
+Make sure the following are present:
+
+cv2
+numpy
+face_recognition
+os
+shutil
+pandas as pd
+sklearn
+
+Once the above is installed, run the script with the command 
+python3 segregate_faces.py
+
+***How to give images?
+1.Create a directory 
+2.Copy the script there
+2.a Now create the directories in the directory :
+3.Create a sub directory in this directory and put the images of the face you want
+4.Put the name of that directory in the global variable tosegregatepath
+5.Create a sub directory in this directory and put the images of the faces that are not the desired faces.
+6.Put the name of that directory in the global variable otherspath
+7.Then crete a directory with mixed images that have to be segregated
+8.Put the name in the golbal variable testpath
+(These all are also present as comments)
+9. Change the segregated directories name move_to_segregated and moce_to_others functions
+10. Simply run the script now
+11. The terminal will show output about the process 
+12. There will also be a classification report
+
+
+
+The model can be changed from svm to decision tree by simply changing train_svm to train_tree and
+putting the train_tree func as:
+
+def train_tree(df):
+    print("Training...")
+    X = df.drop('istrump',axis=1)
+    y = df['istrump']
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=.3,random_state=1234123,stratify=df['istrump'])
+    clf = tree.DecisionTreeClassifier()
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    classification_report_ = classification_report(y_test, y_pred)
+    print('Model accuracy is: ')
+    print(classification_report_)
+    clf.fit(X_train, y_train)
+    return clf
+
+    
